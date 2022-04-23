@@ -1,0 +1,101 @@
+<mvc:View
+	controllerName="zsample2.controller.Detail"
+	xmlns="sap.m"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<semantic:SemanticPage
+		id="detailPage">
+		<semantic:titleHeading>
+			<Title
+				text="{Name}"
+				level="H2"/>
+		</semantic:titleHeading>
+		<semantic:content>
+                <Table id="idTable" 
+                       items="{main>/it_data2}">
+                <headerToolbar>
+					<Toolbar>
+						<Title
+							id="lineItemsTitle"
+							text="{detailView>/lineItemListTitle}"
+							titleStyle="H3"
+							level="H3"/>
+					</Toolbar>
+				</headerToolbar>
+                    <columns>
+                        <Column>
+                            <header>
+                                <Text text="Airline Code"></Text>
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Flight Connection Number"></Text>
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Flight date"></Text>
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Local currency of airline"></Text>
+                            </header>
+                        </Column>               
+                        <Column>
+                            <header>
+                                <Text text="Billing quantity"></Text>
+                            </header>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem press="onSelect" vAlign="Middle">
+                            <cells>
+                                <Text text="{main>carrid}"></Text>
+                                <Text text="{main>connid}"></Text>
+                               	<DatePicker
+									id="DTI2"
+			                        valueFormat="yyyy-MM-dd"
+									value="{main>fldate}"/>
+                                <ObjectNumber
+                                        number="{
+                                            parts:[{path:'main>price'},{path:'main>currency'}],
+                                            type: 'sap.ui.model.type.Currency',
+                                            formatOptions: {showMeasure: false}
+                                        }"
+                                        unit="{main>currency}" 
+                                        />
+                                <ObjectNumber
+                                        number="{main>qty}"
+                                        unit="{main>meins}" 
+                                        />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+		</semantic:content>
+
+		<semantic:closeAction>
+			<semantic:CloseAction
+					id="closeColumn"
+					press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+
+		<semantic:fullScreenAction>
+			<semantic:FullScreenAction
+					id="enterFullScreen"
+					visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+					press=".toggleFullScreen"/>
+		</semantic:fullScreenAction>
+		<semantic:exitFullScreenAction>
+			<semantic:ExitFullScreenAction
+					id="exitFullScreen"
+					visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+					press=".toggleFullScreen"/>
+		</semantic:exitFullScreenAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
